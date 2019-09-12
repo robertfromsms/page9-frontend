@@ -35,7 +35,6 @@ class LoginForm extends React.Component {
       return data
     })
     .then(data => {
-      debugger
       if (data.jwt) {
         const jwt = data.jwt
         localStorage.setItem("jwt", jwt)

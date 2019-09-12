@@ -8,9 +8,7 @@ function genericGetFetch(urlAddition) {
 
 function genericNonGetFetch(urlAddition, configObj) {
 	return (fetch(onlineUrl + urlAddition, configObj)
-	    .then(response => {
-	    	debugger
-	    	response.json()}))
+	    .then(response => response.json()))
 }
 
 export default {genericGetFetch: genericGetFetch, 

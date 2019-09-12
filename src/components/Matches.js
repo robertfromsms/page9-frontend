@@ -18,7 +18,7 @@ const userConfigObj1 = {
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${jwt}`
+    'Authorization': `"Bearer ${jwt}"`
   },
   body: JSON.stringify(USER_HAVE_MATCHES_QUERY)
 }
@@ -30,7 +30,7 @@ const userConfigObj2 = {
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${jwt}`
+    'Authorization': `"Bearer ${jwt}"`
   },
   body: JSON.stringify(USER_WANT_MATCHES_QUERY)
 }

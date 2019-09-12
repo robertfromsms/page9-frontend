@@ -17,7 +17,7 @@ const userConfigObj = {
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${jwt}`
+    'Authorization': `"Bearer ${jwt}"`
   },
   body: JSON.stringify(USER_WANTHAVE_QUERY)
 }
@@ -86,7 +86,7 @@ class WantHave extends React.Component {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${jwt}`
+          'Authorization': `"Bearer ${jwt}"`
         },
         body: JSON.stringify(SELL_ITEM_MUTATION)
       }

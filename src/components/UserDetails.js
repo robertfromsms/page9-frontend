@@ -16,7 +16,7 @@ const userDetailsConfigObj = {
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${jwt}`
+    'Authorization': `"Bearer ${jwt}"`
   },
   body: JSON.stringify(USER_DETAILS_QUERY)
 }
@@ -58,7 +58,7 @@ class UserDetails extends React.Component {
       headers: {
         "Accept": 'application/json',
         "Content-Type": 'application/json',
-        'Authorization': `Bearer ${jwt}`
+        'Authorization': `"Bearer ${jwt}"`
       },
       body: JSON.stringify({
         "user": {

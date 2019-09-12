@@ -23,7 +23,7 @@ const userConfigObj = {
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${jwt}`
+    'Authorization': `"Bearer ${jwt}"`
   },
   body: JSON.stringify(USER_EXCHANGES_QUERY)
 }

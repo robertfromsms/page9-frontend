@@ -1,8 +1,12 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
+
 import fetchFun from '../services/ourBackend'
 
 class NewUserForm extends React.Component {
+  
+  // local state for submitting forms
   constructor(){
     super()
     this.state = {
@@ -16,6 +20,10 @@ class NewUserForm extends React.Component {
 
       }
     }
+  }
+
+  componentDidMount() {
+    this.props.dispatch({type: 'STOP_LOADING'})
   }
 
   userSignup = (event) => {
@@ -57,6 +65,8 @@ class NewUserForm extends React.Component {
           window.location.href = "/signup"
         }
       })
+
+      this.props.dispatch({type: 'LOADING'})
     }
     else {
       alert("Your second password entry must match the first.")
@@ -143,6 +153,11 @@ class NewUserForm extends React.Component {
   }
 }
 
+const iNeedtheFetchedInfo = (state) => {
+  return state
+}
 
+const connector = connect(iNeedtheFetchedInfo)
+const connectedNewUserForm = connector(NewUserForm)
 
-export default NewUserForm
+export default connectedNewUserForm

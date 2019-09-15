@@ -13,7 +13,7 @@ export default class NavBar extends Component {
 
 
   logout = (event) => {
-    localStorage.setItem("jwt", null)
+    localStorage.removeItem("jwt")
     window.location.href = "/"
   }
 
@@ -98,7 +98,7 @@ export default class NavBar extends Component {
 
     return (
       <Menu>
-        {localStorage.jwt !== "null" ? loggedInNavBarItems : notLoggedInNavBarItems}
+        {localStorage.jwt ? loggedInNavBarItems : notLoggedInNavBarItems}
       </Menu>
     )
   }

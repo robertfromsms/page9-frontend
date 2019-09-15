@@ -1,9 +1,13 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
+
 import fetchFun from '../services/ourBackend'
 
 class LoginForm extends React.Component {
+  // The state for submitting forms
+
   constructor(){
     super()
     this.state = {
@@ -12,6 +16,10 @@ class LoginForm extends React.Component {
         password: ""
       }
     }
+  }
+
+  componentDidMount() {
+    this.props.dispatch({type: 'STOP_LOADING'})
   }
 
   userLogin = (event) => {
@@ -45,6 +53,7 @@ class LoginForm extends React.Component {
         window.location.href = "/login"
       }
     })
+    this.props.dispatch({type: 'LOADING'})
   }
 
   render() {
@@ -90,4 +99,11 @@ class LoginForm extends React.Component {
   }
 }
 
-export default LoginForm
+const iNeedtheFetchedInfo = (state) => {
+  return state
+}
+
+const connector = connect(iNeedtheFetchedInfo)
+const connectedLoginForm = connector(LoginForm)
+
+export default connectedLoginForm

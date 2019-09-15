@@ -6,21 +6,8 @@ import * as serviceWorker from './serviceWorker'
 import 'semantic-ui-css/semantic.min.css'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
-// import { ApolloProvider } from 'react-apollo';
-// import { ApolloClient } from 'apollo-client';
-// import { createHttpLink } from 'apollo-link-http';
-// import { InMemoryCache } from 'apollo-cache-inmemory';
 
 import theStore from './store'
-
-// const myLink = createHttpLink({
-//   uri: 'https://localhost:3000/graphql'
-// });
-
-// const client = new ApolloClient({
-//   link: myLink,
-//   cache: new InMemoryCache()
-// });
 
 ReactDOM.render((
 <Provider store={theStore}>

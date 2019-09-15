@@ -1,8 +1,10 @@
 import {createStore, combineReducers} from 'redux'
 import fetchReducer from './reducers/fetchReducer'
+import acReducer from './reducers/acReducer'
 
 const rootReducer = combineReducers({
-	fetchedInfo: fetchReducer
+	fetchedInfo: fetchReducer,
+	appcentricState: acReducer
 })
 
 export default createStore(

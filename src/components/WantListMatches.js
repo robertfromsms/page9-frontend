@@ -5,6 +5,8 @@ import { Button, Grid, Label, Table } from 'semantic-ui-react'
 import ModalModal from './Modal'
 
 class WantListMatches extends React.Component {
+	
+	// local stage for page/next page
 	constructor(props) {
 		super(props)
 		this.state = {

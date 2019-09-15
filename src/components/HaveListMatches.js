@@ -5,6 +5,8 @@ import { Button, Grid, Label, Table } from 'semantic-ui-react'
 import ModalModal from './Modal'
 
 class HaveListMatches extends React.Component {
+	
+	// set local state for page/next page. Props passed from matches
 	constructor(props) {
 		super(props)
 		this.state = {

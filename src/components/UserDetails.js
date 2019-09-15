@@ -7,25 +7,14 @@ import ABunchOfConstants from './ABunchOfConstants'
 import ResponsiveContainer from './ResponsiveContainer'
 import Loading from './Loading'
 
-const USER_DETAILS_QUERY = ABunchOfConstants.userDetailsQuery
+const USER_DETAILS_CONFIG_OBJ = ABunchOfConstants.userDetailsConfigObj
 
-const jwt = localStorage.jwt
 
-const userDetailsConfigObj = {
-  method: 'POST',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'Authorization': `"Bearer ${jwt}"`
-  },
-  body: JSON.stringify(USER_DETAILS_QUERY)
-}
-
+// local state for submitting forms
 class UserDetails extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: true,
       user: {
         full_name: null,
         password: null,
@@ -38,15 +27,16 @@ class UserDetails extends React.Component {
   }
 
   componentDidMount() {
-    fetchFun.genericNonGetFetch("graphql", userDetailsConfigObj)
+    fetchFun.genericNonGetFetch("graphql", USER_DETAILS_CONFIG_OBJ)
     .then((data) => {
         this.props.dispatch({
           type: 'FETCH_USER_DETAILS_DATA',
           userDetailsData: data.data
         })
-        this.setState({loading:false})
+        this.props.dispatch({type: 'STOP_LOADING'})
       }
     )
+    this.props.dispatch({type: 'LOADING'})
   }
 
   userUpdate = (event) => {
@@ -72,12 +62,12 @@ class UserDetails extends React.Component {
       })
     }
 
-    if (user.password === user.password_confirmation) {
+    if (( !user.password && !user.password_confirmation) || user.password === user.password_confirmation) {
       fetchFun.genericNonGetFetch("userupdate", userUpdateConfigObj)
       .then(data => {
         if (data.jwt) {
           alert("Update successfully. Logging you out")
-          localStorage.setItem("jwt", null)
+          localStorage.removeItem("jwt")
           window.location.href = "/"
         }
         else {
@@ -121,7 +111,8 @@ class UserDetails extends React.Component {
           <Form size='large'>
             <Segment stacked>
               <Form.Input onChange={(event) => {
-                this.setState({user: {...this.state.user, full_name: event.target.value}})
+                let fullName = event.target.value === "" ? null : event.target.value
+                this.setState({user: {...this.state.user, full_name: fullName}})
               }} 
                 fluid 
                 icon='user plus' 
@@ -130,7 +121,8 @@ class UserDetails extends React.Component {
                 name='full_name' 
               />
               <Form.Input onChange={(event) => {
-                this.setState({user: {...this.state.user, password: event.target.value}})
+                let password = event.target.value === "" ? null : event.target.value
+                this.setState({user: {...this.state.user, password: password}})
               }} 
                 fluid
                 icon='lock'
@@ -140,7 +132,8 @@ class UserDetails extends React.Component {
                 name='password'
               />
               <Form.Input onChange={(event) => {
-                this.setState({user: {...this.state.user, password_confirmation: event.target.value}})
+                let password_con = event.target.value === "" ? null : event.target.value
+                this.setState({user: {...this.state.user, password_confirmation: password_con}})
               }} 
                 fluid
                 icon='lock'
@@ -150,7 +143,8 @@ class UserDetails extends React.Component {
                 name='password_confirmation'
               />
               <Form.Input onChange={(event) => {
-                this.setState({user: {...this.state.user, address: event.target.value}})
+                let address = event.target.value === "" ? null : event.target.value
+                this.setState({user: {...this.state.user, address: address}})
               }} 
                 fluid
                 icon='address book'
@@ -159,7 +153,8 @@ class UserDetails extends React.Component {
                 name='address'
               />
               <Form.Input onChange={(event) => {
-                this.setState({user: {...this.state.user, email: event.target.value}})
+                let email = event.target.value === "" ? null : event.target.value
+                this.setState({user: {...this.state.user, email: email}})
               }} 
                 fluid
                 icon='envelope'
@@ -180,14 +175,14 @@ class UserDetails extends React.Component {
       { menuItem: 'Edit Account Info', render: () => <Tab.Pane>{editUserDetailFormComp}</Tab.Pane> }
     ]
     return (
-      !this.state.loading ?
-        <Grid style={{ height: '200vh', padding: '3em'}} verticalAlign='middle' stackable centered id="showcase">
-            <Tab menu={{ borderless: true, attached: false, tabular: false }} panes={userDetailsPanes} />
-        </Grid>
-      :
+      this.props.appcentricState.loading ?
         <ResponsiveContainer verticalAlign='middle' centered>
           <Loading />
         </ResponsiveContainer>
+      :
+        <Grid style={{ height: '200vh', padding: '3em'}} verticalAlign='middle' stackable centered id="showcase">
+            <Tab menu={{ borderless: true, attached: false, tabular: false }} panes={userDetailsPanes} />
+        </Grid>
     )
   }
 }

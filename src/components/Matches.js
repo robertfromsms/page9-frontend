@@ -9,42 +9,20 @@ import ABunchOfConstants from './ABunchOfConstants'
 import WantListMatches from './WantListMatches'
 import HaveListMatches from './HaveListMatches'
 
-const USER_HAVE_MATCHES_QUERY = ABunchOfConstants.userHaveMatchesQuery
-
-const jwt = localStorage.jwt
-
-const userConfigObj1 = {
-  method: 'POST',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'Authorization': `"Bearer ${jwt}"`
-  },
-  body: JSON.stringify(USER_HAVE_MATCHES_QUERY)
-}
-
-const USER_WANT_MATCHES_QUERY = ABunchOfConstants.userWantMatchesQuery
-
-const userConfigObj2 = {
-  method: 'POST',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'Authorization': `"Bearer ${jwt}"`
-  },
-  body: JSON.stringify(USER_WANT_MATCHES_QUERY)
-}
+const USER_HAVE_MATCHES_QUERY_CONFIG_OBJ = ABunchOfConstants.userHaveMatchesQueryConfigObj
+const USER_WANT_MATCHES_QUERY_CONFIG_OBJ = ABunchOfConstants.userWantMatchesQueryConfigObj
 
 class Matches extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       wantPage: 0,
-      havePage: 0,
-      loading: true
+      havePage: 0
     }
   }
 
+
+  // This nests the data in the user -> matches of that user way, and also sort the data by the number of matches with each individual user
   cleanUpData = (data) => {
     let listMatches = data.data.users[0].haveListMatches ? data.data.users[0].haveListMatches : data.data.users[0].wantListMatches
     let uniqUser = listMatches.map((match) =>  match.user).filter((obj, position, arr) => {
@@ -68,18 +46,17 @@ class Matches extends React.Component {
   }
 
   componentDidMount() {
-    fetchFun.genericNonGetFetch("graphql", userConfigObj1)
+    fetchFun.genericNonGetFetch("graphql", USER_HAVE_MATCHES_QUERY_CONFIG_OBJ)
     .then((data) => {
         let newData = this.cleanUpData(data)
         this.props.dispatch({
           type: 'FETCH_HAVE_MATCH_DATA',
           haveMatchData: newData
         })
-        this.setState({
-          loading: false})
+        this.props.dispatch({type: 'STOP_LOADING'})
       }
     )
-    fetchFun.genericNonGetFetch("graphql", userConfigObj2)
+    fetchFun.genericNonGetFetch("graphql", USER_WANT_MATCHES_QUERY_CONFIG_OBJ)
     .then((data) => {
         let newData = this.cleanUpData(data)
         this.props.dispatch({
@@ -88,6 +65,7 @@ class Matches extends React.Component {
         })
       }
     )
+    this.props.dispatch({type: 'LOADING'})
   }
 
   render() {
@@ -148,14 +126,14 @@ class Matches extends React.Component {
       { menuItem: 'Want List Matches', render: () => <Tab.Pane>{wantListMatchesContent}</Tab.Pane> }
     ]
     return (
-      !this.state.loading ?
-        <Grid textAlign='center' style={{ minHeight: '200vh', padding: '3em'}} verticalAlign='middle' celled='internally' columns='equal' stackable id="showcase">
-          <Tab menu={{ borderless: true, attached: false, tabular: false }} panes={wantHavePanes} />
-        </Grid>
-      :
+      this.props.appcentricState.loading ?
         <ResponsiveContainer verticalAlign='middle' centered>
           <Loading />
         </ResponsiveContainer>
+      :
+        <Grid textAlign='center' style={{ minHeight: '200vh', padding: '3em'}} verticalAlign='middle' celled='internally' columns='equal' stackable id="showcase">
+          <Tab menu={{ borderless: true, attached: false, tabular: false }} panes={wantHavePanes} />
+        </Grid>
     )
   }
 }

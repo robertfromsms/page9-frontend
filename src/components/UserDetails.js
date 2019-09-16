@@ -103,6 +103,7 @@ class UserDetails extends React.Component {
         </Card>
       </Grid.Row>
     )
+    // we check whether if the update fields are empty strings, if they are, they are set to null
     const editUserDetailFormComp = (
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as='h2' color='blue' textAlign='center'>

@@ -63,11 +63,13 @@ class AddToWant extends React.Component {
       fetchFun.genericNonGetFetch("graphql", createItemConfigObj)
       .then((data) => {
         let message = data.data.createItem.message === "" ? data.data.createItem.errors : data.data.createItem.message
-        this.props.dispatch({
-          type: 'ADD_THIS_CARD',
-          card: data.data.createItem.item
-        })
         alert(message)
+        if (data.data.createItem.message) {
+          this.props.dispatch({
+            type: 'ADD_THIS_CARD',
+            card: data.data.createItem.item
+          })
+        }
         this.props.dispatch({type: 'STOP_LOADING'})
       })
       this.props.dispatch({type: 'LOADING'})

@@ -3,6 +3,8 @@ import {connect} from 'react-redux'
 import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 
 import fetchFun from '../services/ourBackend'
+import ResponsiveContainer from './ResponsiveContainer'
+import Loading from './Loading'
 
 class NewUserForm extends React.Component {
   
@@ -76,79 +78,82 @@ class NewUserForm extends React.Component {
 
   render() {
     return (
-
-      <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle' id="showcase">
-        <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as='h2' color='blue' textAlign='center'>
-            Create a new account
-          </Header>
-          <Form size='large'>
-            <Segment stacked>
-              <Form.Input onChange={(event) => {
-                this.setState({user: {...this.state.user, user_name: event.target.value}})
-              }} 
-                fluid 
-                icon='user' 
-                iconPosition='left' 
-                placeholder='Username' 
-                name='user_name' 
-              />
-              <Form.Input onChange={(event) => {
-                this.setState({user: {...this.state.user, full_name: event.target.value}})
-              }} 
-                fluid 
-                icon='user plus' 
-                iconPosition='left' 
-                placeholder='Full Name' 
-                name='full_name' 
-              />
-              <Form.Input onChange={(event) => {
-                this.setState({user: {...this.state.user, password: event.target.value}})
-              }} 
-                fluid
-                icon='lock'
-                iconPosition='left'
-                placeholder='Password'
-                type='password'
-                name='password'
-              />
-              <Form.Input onChange={(event) => {
-                this.setState({user: {...this.state.user, password_confirmation: event.target.value}})
-              }} 
-                fluid
-                icon='lock'
-                iconPosition='left'
-                placeholder='Enter your password again'
-                type='password'
-                name='password_confirmation'
-              />
-              <Form.Input onChange={(event) => {
-                this.setState({user: {...this.state.user, address: event.target.value}})
-              }} 
-                fluid
-                icon='address book'
-                iconPosition='left'
-                placeholder='Address'
-                name='address'
-              />
-              <Form.Input onChange={(event) => {
-                this.setState({user: {...this.state.user, email: event.target.value}})
-              }} 
-                fluid
-                icon='envelope'
-                iconPosition='left'
-                placeholder='Email'
-                name='email'
-              />
-    
-              <Button onClick={this.userSignup}color='blue' fluid size='large'>
-                Create New User
-              </Button>
-            </Segment>
-          </Form>
-        </Grid.Column>
-      </Grid>
-
+      this.props.appcentricState.loading ?
+        <ResponsiveContainer verticalAlign='middle' centered>
+          <Loading />
+        </ResponsiveContainer>
+      :
+        <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle' id="showcase">
+          <Grid.Column style={{ maxWidth: 450 }}>
+            <Header as='h2' color='blue' textAlign='center'>
+              Create a new account
+            </Header>
+            <Form size='large'>
+              <Segment stacked>
+                <Form.Input onChange={(event) => {
+                  this.setState({user: {...this.state.user, user_name: event.target.value}})
+                }} 
+                  fluid 
+                  icon='user' 
+                  iconPosition='left' 
+                  placeholder='Username' 
+                  name='user_name' 
+                />
+                <Form.Input onChange={(event) => {
+                  this.setState({user: {...this.state.user, full_name: event.target.value}})
+                }} 
+                  fluid 
+                  icon='user plus' 
+                  iconPosition='left' 
+                  placeholder='Full Name' 
+                  name='full_name' 
+                />
+                <Form.Input onChange={(event) => {
+                  this.setState({user: {...this.state.user, password: event.target.value}})
+                }} 
+                  fluid
+                  icon='lock'
+                  iconPosition='left'
+                  placeholder='Password'
+                  type='password'
+                  name='password'
+                />
+                <Form.Input onChange={(event) => {
+                  this.setState({user: {...this.state.user, password_confirmation: event.target.value}})
+                }} 
+                  fluid
+                  icon='lock'
+                  iconPosition='left'
+                  placeholder='Enter your password again'
+                  type='password'
+                  name='password_confirmation'
+                />
+                <Form.Input onChange={(event) => {
+                  this.setState({user: {...this.state.user, address: event.target.value}})
+                }} 
+                  fluid
+                  icon='address book'
+                  iconPosition='left'
+                  placeholder='Address'
+                  name='address'
+                />
+                <Form.Input onChange={(event) => {
+                  this.setState({user: {...this.state.user, email: event.target.value}})
+                }} 
+                  fluid
+                  icon='envelope'
+                  iconPosition='left'
+                  placeholder='Email'
+                  name='email'
+                />
+      
+                <Button onClick={this.userSignup}color='blue' fluid size='large'>
+                  Create New User
+                </Button>
+              </Segment>
+            </Form>
+          </Grid.Column>
+        </Grid>
     )
   }
 }

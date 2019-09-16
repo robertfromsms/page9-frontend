@@ -4,6 +4,8 @@ import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 
 import fetchFun from '../services/ourBackend'
+import ResponsiveContainer from './ResponsiveContainer'
+import Loading from './Loading'
 
 class LoginForm extends React.Component {
   // The state for submitting forms
@@ -58,43 +60,46 @@ class LoginForm extends React.Component {
 
   render() {
     return (
-
-      <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle' id="showcase">
-        <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as='h2' color='blue' textAlign='center'>
-            Log in to your account
-          </Header>
-          <Form size='large'>
-            <Segment stacked>
-              <Form.Input onChange={(event) => {
-                this.setState({user: {...this.state.user, user_name: event.target.value}})
-              }} fluid icon='user' iconPosition='left' placeholder='Username' name='user_name' />
-              <Form.Input onChange={(event) => {
-                this.setState({user: {...this.state.user, password: event.target.value}})
-              }} 
-                fluid
-                icon='lock'
-                iconPosition='left'
-                placeholder='Password'
-                type='password'
-                name='password'
-              />
-    
-              <Button onClick={this.userLogin}color='blue' fluid size='large'>
-                Login
-              </Button>
-            </Segment>
-          </Form>
-          <Link to='/signup'>
-            <button 
-              type="button"
-              className="link-button" 
-              >Don't have an account? Click here to sign up
-            </button>
-          </Link>
-        </Grid.Column>
-      </Grid>
-
+      this.props.appcentricState.loading ?
+        <ResponsiveContainer verticalAlign='middle' centered>
+          <Loading />
+        </ResponsiveContainer>
+      :
+        <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle' id="showcase">
+          <Grid.Column style={{ maxWidth: 450 }}>
+            <Header as='h2' color='blue' textAlign='center'>
+              Log in to your account
+            </Header>
+            <Form size='large'>
+              <Segment stacked>
+                <Form.Input onChange={(event) => {
+                  this.setState({user: {...this.state.user, user_name: event.target.value}})
+                }} fluid icon='user' iconPosition='left' placeholder='Username' name='user_name' />
+                <Form.Input onChange={(event) => {
+                  this.setState({user: {...this.state.user, password: event.target.value}})
+                }} 
+                  fluid
+                  icon='lock'
+                  iconPosition='left'
+                  placeholder='Password'
+                  type='password'
+                  name='password'
+                />
+      
+                <Button onClick={this.userLogin}color='blue' fluid size='large'>
+                  Login
+                </Button>
+              </Segment>
+            </Form>
+            <Link to='/signup'>
+              <button 
+                type="button"
+                className="link-button" 
+                >Don't have an account? Click here to sign up
+              </button>
+            </Link>
+          </Grid.Column>
+        </Grid>
     )
   }
 }

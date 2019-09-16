@@ -1,23 +1,14 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { Button, Form, Grid, Header, Label, Select, Tab, Table } from 'semantic-ui-react'
+import { Button, Label, Table } from 'semantic-ui-react'
 
 import fetchFun from '../services/ourBackend'
-import ResponsiveContainer from './ResponsiveContainer'
-import Loading from './Loading'
 import ModalModal from './Modal'
 import ABunchOfConstants from './ABunchOfConstants'
 
-const USER_CONFIG_OBJ = ABunchOfConstants.userConfigObj
-let setNameOptions = ABunchOfConstants.setNameOptions
-let foilNormalOptions = ABunchOfConstants.foilNormalOptions
-let conditionOptions = ABunchOfConstants.conditionOptions
 const jwt = localStorage.jwt
 
 class WantListTableRow extends React.Component {
-  constructor(props) {
-    super(props)
-  }
 
   removeItem = (event, card) => {
     const REMOVE_ITEM_MUTATION = {

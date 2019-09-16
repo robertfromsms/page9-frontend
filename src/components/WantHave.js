@@ -1,11 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { Button, Form, Grid, Header, Label, Select, Tab, Table } from 'semantic-ui-react'
+import { Button, Grid, Tab, Table } from 'semantic-ui-react'
 
 import fetchFun from '../services/ourBackend'
 import ResponsiveContainer from './ResponsiveContainer'
 import Loading from './Loading'
-import ModalModal from './Modal'
 import ABunchOfConstants from './ABunchOfConstants'
 import WantListTableRow from './WantListTableRow'
 import HaveListTableRow from './HaveListTableRow'
@@ -13,10 +12,6 @@ import AddToHave from './AddToHave'
 import AddToWant from './AddToWant'
 
 const USER_CONFIG_OBJ = ABunchOfConstants.userConfigObj
-let setNameOptions = ABunchOfConstants.setNameOptions
-let foilNormalOptions = ABunchOfConstants.foilNormalOptions
-let conditionOptions = ABunchOfConstants.conditionOptions
-const jwt = localStorage.jwt
 
 class WantHave extends React.Component {
   constructor(props) {

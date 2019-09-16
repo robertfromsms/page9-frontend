@@ -4,7 +4,6 @@ import { Button, Label, Table } from 'semantic-ui-react'
 
 import fetchFun from '../services/ourBackend'
 import ModalModal from './Modal'
-import ABunchOfConstants from './ABunchOfConstants'
 
 const jwt = localStorage.jwt
 
